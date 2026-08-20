@@ -15,7 +15,7 @@
 
 主要功能：
 
-- 一鍵安裝 **cc886751**（自訂的 LiveContainer + SideStore 版本）
+- 一鍵安裝 **iiTwins**（自訂的 LiveContainer + SideStore 版本）
 - 匯入任何 `.ipa` 檔案安裝到裝置
 - 自動處理配對檔（pairing file）與憑證
 - 檢視 / 撤銷開發憑證與 App ID
@@ -46,7 +46,7 @@
 
 | 項目 | 變更 |
 |---|---|
-| 安裝來源 | 指向自訂的 cc886751 版本 |
+| 安裝來源 | 指向自訂的 iiTwins 版本 |
 | 安裝選項 | 移除官方 SideStore / LiveContainer 的四個安裝按鈕 |
 | 識別碼 | `com.tyu.iisend`（與原專案並存，不衝突） |
 | 憑證儲存 | 使用獨立的 keyring 空間 |
