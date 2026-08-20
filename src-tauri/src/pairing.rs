@@ -42,6 +42,10 @@ const PAIRING_APPS: &[(&str, &str)] = &[
         "LiveContainer",
         "SideStore/Documents/ALTPairingFile.mobiledevicepairing",
     ),
+    (
+        "cc886751",
+        "SideStore/Documents/ALTPairingFile.mobiledevicepairing",
+    ),
     ("Feather", "pairingFile.plist"),
     ("StikDebug", "pairingFile.plist"),
     ("StikDebug (Sideloaded)", "rp_pairing_file.plist"),
@@ -525,7 +529,7 @@ pub async fn get_sidestore_info(
             .and_then(|x| x.get("CFBundleDisplayName").and_then(|x| x.as_string()))
             .ok_or(AppError::Misc("Failed to parse installed apps".to_string()))?;
 
-        if n == "SideStore" || (live_container && n == "LiveContainer") {
+        if n == "SideStore" || (live_container && (n == "cc886751" || n == "LiveContainer")) {
             return Ok(Some(PairingAppInfo {
                 name: n.to_string(),
                 bundle_id: bundle_id.to_string(),
