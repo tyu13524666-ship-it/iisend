@@ -106,7 +106,7 @@
     "install_sidestore_step_pairing": "放置配對檔案",
     "install_livecontainer_title": "正在安裝 cc886751",
     "install_livecontainer_success_title": "cc886751 安裝成功！",
-    "install_livecontainer_success_message": "要完成安裝，請開啟 cc886751，選擇設定，然後點擊「從 SideStore 匯入憑證」。接著，選擇應用程式，點擊 sidestore 圖示，並重新整理 cc886751。",
+    "install_livecontainer_success_message": "要完成安裝，請依序操作：1. 開啟 cc886751，切換到 SideStore，登入你的 Apple 帳號。2. 回到 cc886751 的設定，點擊「從 SideStore 匯入憑證」。3. 回到應用程式頁，重新整理。",
     "install_livecontainer_step_download": "下載 cc886751",
     "install_livecontainer_step_install": "簽名並安裝 cc886751",
     "install_livecontainer_step_pairing": "放置配對檔案",

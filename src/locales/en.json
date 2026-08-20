@@ -110,7 +110,7 @@
     "install_sidestore_step_pairing": "Place Pairing File",
     "install_livecontainer_title": "Installing cc886751",
     "install_livecontainer_success_title": "cc886751 Installed!",
-    "install_livecontainer_success_message": "To complete the installation, open cc886751, choose settings, and click \"Import Certificate From SideStore.\" Then, choose apps, click the sidestore icon, and refresh cc886751.",
+    "install_livecontainer_success_message": "To complete the installation, follow these steps in order: 1. Open cc886751, switch to SideStore, and sign in with your Apple account. 2. Go back to cc886751's settings and click \"Import Certificate From SideStore\". 3. Return to the apps page and refresh.",
     "install_livecontainer_step_download": "Download cc886751",
     "install_livecontainer_step_install": "Sign & Install cc886751",
     "install_livecontainer_step_pairing": "Place Pairing File",
