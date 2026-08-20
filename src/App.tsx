@@ -7,7 +7,6 @@ import { open as openFileDialog } from "@tauri-apps/plugin-dialog";
 import { openUrl } from "@tauri-apps/plugin-opener";
 import {
   sideloadOperation,
-  installSideStoreOperation,
   installLiveContainerOperation,
   Operation,
   OperationState,
