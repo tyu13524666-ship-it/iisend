@@ -4,7 +4,6 @@ import { AppleID } from "./AppleID";
 import { Device, DeviceInfo } from "./Device";
 import { invoke } from "@tauri-apps/api/core";
 import { open as openFileDialog } from "@tauri-apps/plugin-dialog";
-import { openUrl } from "@tauri-apps/plugin-opener";
 import {
   sideloadOperation,
   installLiveContainerOperation,
@@ -191,21 +190,6 @@ function App() {
           <span className="version-pill">
             {t("version")} {version}
           </span>
-        </div>
-        <div className="header-actions">
-          <button
-            className="toolbar-button"
-            onClick={async () => {
-              try {
-                await openUrl("https://github.com/tyu13524666-ship-it/iisend");
-              } catch (error) {
-                console.error("Failed to open GitHub link", error);
-                toast.error(t("app.open_github_failed"));
-              }
-            }}
-          >
-            {t("app.github")}
-          </button>
         </div>
       </header>
       <div className="workspace-body">

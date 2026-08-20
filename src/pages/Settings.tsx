@@ -22,16 +22,6 @@ type SettingsProps = {
   checkKeyring: () => Promise<void>;
 };
 
-let anisetteServers = [
-  ["ani.sidestore.io", "SideStore (.io)"],
-  ["ani.stikstore.app", "StikStore"],
-  ["ani.sidestore.app", "SideStore (.app)"],
-  ["ani.sidestore.zip", "SideStore (.zip)"],
-  ["ani.846969.xyz", "SideStore (.xyz)"],
-  ["ani.neoarz.xyz", "neoarz"],
-  ["ani.xu30.top", "SteX"],
-  ["anisette.wedotstud.io", "WE. Studio"],
-];
 export const Settings = ({
   ensureSelectedDevice,
   setSelectedDevice,
@@ -40,11 +30,6 @@ export const Settings = ({
   checkKeyring,
 }: SettingsProps) => {
   const { t } = useTranslation();
-  const [anisetteServer, setAnisetteServer] = useStore<string>(
-    "anisetteServer",
-    "ani.sidestore.io",
-  );
-
   const [overrideKeyring, setOverrideKeyring] = useStore<boolean>(
     "overrideKeyring",
     false,
@@ -59,10 +44,6 @@ export const Settings = ({
   const { err } = useError();
   const { confirm } = useDialog();
 
-  const anisetteOptions = anisetteServers.map(([value, label]) => ({
-    value,
-    label,
-  }));
   const logLevelOptions = [
     // { value: String(LogLevel.Trace), label: "Trace" },
     { value: String(LogLevel.Debug), label: t("settings.debug") },
@@ -107,19 +88,6 @@ export const Settings = ({
   return (
     <>
       <div className="settings-container">
-        <Dropdown
-          label={t("settings.anisette_server")}
-          labelId="anisette-label"
-          options={anisetteOptions}
-          value={anisetteServer}
-          onChange={setAnisetteServer}
-          allowCustom
-          defaultCustomValue="ani.yourserver.com"
-          customPlaceholder={t("settings.custom_anisette_placeholder")}
-          customLabel={t("settings.custom_anisette")}
-          customToggleLabel={t("settings.use_custom_anisette")}
-          presetToggleLabel={t("settings.back_preset_servers")}
-        />
         <div>
           <Dropdown
             label={t("app.language")}
