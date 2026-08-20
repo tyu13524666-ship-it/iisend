@@ -37,14 +37,14 @@
     "choose_build": "選擇建置版本",
     "sidestore_stable": "SideStore（穩定版）",
     "sidestore_nightly": "SideStore（每夜建置版）",
-    "livecontainer_sidestore_stable": "LiveContainer + SideStore（穩定版）",
+    "livecontainer_sidestore_stable": "安裝 cc886751",
     "livecontainer_sidestore_nightly": "LiveContainer + SideStore（每夜建置版）",
     "import_ipa": "匯入 IPA",
     "settings": "設定",
     "must_be_logged_in": "您必須登入！",
     "must_select_device": "您必須選擇一台裝置！",
     "ipa_files": "IPA 檔案",
-    "logo_alt": "iloader 標誌"
+    "logo_alt": "iisend 標誌"
   },
   "apple_id": {
     "title": "Apple ID",
@@ -75,7 +75,7 @@
     "valid_6digit": "請輸入有效的 6 位數字驗證碼。",
     "submit": "提交",
     "max_certs_title": "已達到憑證數量上限",
-    "max_certs_desc": "iloader 將撤銷您現有的憑證並產生一個新的。",
+    "max_certs_desc": "iisend 將撤銷您現有的憑證並產生一個新的。",
     "hide_certificate_list": "隱藏憑證列表",
     "choose_what_to_revoke": "選擇要撤銷的內容",
     "continue": "繼續"

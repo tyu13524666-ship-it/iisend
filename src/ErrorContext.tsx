@@ -167,7 +167,7 @@ export const ErrorProvider: React.FC<{ children: React.ReactNode }> = ({
                     github: (
                       <span
                         onClick={() =>
-                          openUrl("https://github.com/nab138/iloader/issues")
+                          openUrl("https://github.com/tyu13524666-ship-it/iisend/issues")
                         }
                         role="link"
                         className="error-link"

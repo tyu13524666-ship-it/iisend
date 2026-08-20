@@ -3,7 +3,7 @@
   "configVersion": 0,
   "workspaces": {
     "": {
-      "name": "iloader",
+      "name": "iisend",
       "dependencies": {
         "@tauri-apps/api": "^2.10.1",
         "@tauri-apps/plugin-dialog": "~2.7.0",

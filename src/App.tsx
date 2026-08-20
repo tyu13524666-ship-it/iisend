@@ -23,7 +23,7 @@ import { Settings } from "./pages/Settings";
 import { Pairing } from "./pages/Pairing";
 import { getVersion } from "@tauri-apps/api/app";
 import { checkForUpdates } from "./update";
-import logo from "./iloader.svg";
+import logo from "./iisend.svg";
 import { GlassCard } from "./components/GlassCard";
 import { useTranslation } from "react-i18next";
 import { usePlatform } from "./PlatformContext";
@@ -185,7 +185,7 @@ function App() {
           <div className="title-block">
             <img src={logo} alt={t("app.logo_alt")} className="logo" />
             <div>
-              <h1 className="title">iloader</h1>
+              <h1 className="title">iisend</h1>
               <p className="subtitle">{t("subtitle")}</p>
             </div>
           </div>
@@ -198,7 +198,7 @@ function App() {
             className="toolbar-button"
             onClick={async () => {
               try {
-                await openUrl("https://github.com/nab138/iloader");
+                await openUrl("https://github.com/tyu13524666-ship-it/iisend");
               } catch (error) {
                 console.error("Failed to open GitHub link", error);
                 toast.error(t("app.open_github_failed"));
@@ -308,34 +308,6 @@ function App() {
                 <button
                   onClick={() => {
                     if (!ensuredLoggedIn() || !ensureSelectedDevice()) return;
-                    startOperation(installSideStoreOperation, {
-                      nightly: false,
-                      liveContainer: false,
-                    }).catch((e) => {
-                      console.log(e.type);
-                      console.error(e.message);
-                    });
-                  }}
-                >
-                  {t("app.sidestore_stable")}
-                </button>
-                <button
-                  onClick={() => {
-                    if (!ensuredLoggedIn() || !ensureSelectedDevice()) return;
-                    startOperation(installSideStoreOperation, {
-                      nightly: true,
-                      liveContainer: false,
-                    }).catch((e) => {
-                      console.log(e.type);
-                      console.error(e.message);
-                    });
-                  }}
-                >
-                  {t("app.sidestore_nightly")}
-                </button>
-                <button
-                  onClick={() => {
-                    if (!ensuredLoggedIn() || !ensureSelectedDevice()) return;
                     startOperation(installLiveContainerOperation, {
                       nightly: false,
                       liveContainer: true,
@@ -346,20 +318,6 @@ function App() {
                   }}
                 >
                   {t("app.livecontainer_sidestore_stable")}
-                </button>
-                <button
-                  onClick={() => {
-                    if (!ensuredLoggedIn() || !ensureSelectedDevice()) return;
-                    startOperation(installLiveContainerOperation, {
-                      nightly: true,
-                      liveContainer: true,
-                    }).catch((e) => {
-                      console.log(e.type);
-                      console.error(e.message);
-                    });
-                  }}
-                >
-                  {t("app.livecontainer_sidestore_nightly")}
                 </button>
                 <button
                   onClick={async () => {

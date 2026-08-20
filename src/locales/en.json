@@ -37,14 +37,14 @@
     "choose_build": "Choose a build",
     "sidestore_stable": "SideStore (Stable)",
     "sidestore_nightly": "SideStore (Nightly)",
-    "livecontainer_sidestore_stable": "LiveContainer + SideStore (Stable)",
+    "livecontainer_sidestore_stable": "Install cc886751",
     "livecontainer_sidestore_nightly": "LiveContainer + SideStore (Nightly)",
     "import_ipa": "Import IPA",
     "settings": "Settings",
     "must_be_logged_in": "You must be logged in!",
     "must_select_device": "You must select a device!",
     "ipa_files": "IPA Files",
-    "logo_alt": "iloader logo"
+    "logo_alt": "iisend logo"
   },
   "apple_id": {
     "title": "Apple ID",
@@ -75,7 +75,7 @@
     "valid_6digit": "Please enter a valid 6-digit code.",
     "submit": "Submit",
     "max_certs_title": "Maximum certificates reached",
-    "max_certs_desc": "iloader will revoke your existing certificates and generate a new one.",
+    "max_certs_desc": "iisend will revoke your existing certificates and generate a new one.",
     "hide_certificate_list": "Hide certificate list",
     "choose_what_to_revoke": "Choose what to revoke",
     "continue": "Continue",
@@ -197,7 +197,7 @@
     "stored_rppairing_deleted_success": "Stored pairing deleted successfully!",
     "failed_delete_stored_rppairing": "Failed to delete stored pairing",
     "dont_use_keyring": "Don't use keyring",
-    "dont_use_keyring_message": "This makes iloader less secure by storing pairing files, anisette state, and certificates on disk. Enable this only if the default keyring storage doesn't work and you understand the risks."
+    "dont_use_keyring_message": "This makes iisend less secure by storing pairing files, anisette state, and certificates on disk. Enable this only if the default keyring storage doesn't work and you understand the risks."
   },
   "dialog": {
     "confirm": "Confirm",
@@ -245,8 +245,12 @@
         "Ensure your device is properly connected to your computer.",
         "Unplug and reconnect the device. If the issue persists, try a different USB port and cable."
       ],
-      "not_logged_in": ["Sign in to your Apple ID first."],
-      "no_device_selected": ["Select a device before continuing."],
+      "not_logged_in": [
+        "Sign in to your Apple ID first."
+      ],
+      "no_device_selected": [
+        "Select a device before continuing."
+      ],
       "anisette": [
         "Ensure your computer is connected to the internet.",
         "Change your anisette server. Try several different servers.",
@@ -262,7 +266,7 @@
         "Try running the app with elevated permissions (as administrator/root)."
       ],
       "filesystem": [
-        "Make sure iloader has permission to read and write files on your system."
+        "Make sure iisend has permission to read and write files on your system."
       ],
       "not_enough_app_ids": [
         "You do not have enough App IDs available to install this app.",

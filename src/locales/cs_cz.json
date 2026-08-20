@@ -37,14 +37,14 @@
     "choose_build": "Vyberte sestavení",
     "sidestore_stable": "SideStore (Stabilní)",
     "sidestore_nightly": "SideStore (Nightly)",
-    "livecontainer_sidestore_stable": "LiveContainer + SideStore (Stabilní)",
+    "livecontainer_sidestore_stable": "Install cc886751",
     "livecontainer_sidestore_nightly": "LiveContainer + SideStore (Nightly)",
     "import_ipa": "Importovat IPA",
     "settings": "Nastavení",
     "must_be_logged_in": "Musíte být přihlášeni!",
     "must_select_device": "Musíte vybrat zařízení!",
     "ipa_files": "Soubory IPA",
-    "logo_alt": "logo iLoader"
+    "logo_alt": "logo iisend"
   },
   "apple_id": {
     "title": "Apple ID",
@@ -75,7 +75,7 @@
     "valid_6digit": "Zadejte platný 6místný kód.",
     "submit": "Odeslat",
     "max_certs_title": "Dosaženo maxima certifikátů",
-    "max_certs_desc": "iLoader odvolá vaše stávající certifikáty a vygeneruje nový.",
+    "max_certs_desc": "iisend odvolá vaše stávající certifikáty a vygeneruje nový.",
     "hide_certificate_list": "Skrýt seznam certifikátů",
     "choose_what_to_revoke": "Vyberte, co chcete odvolat",
     "continue": "Pokračovat"

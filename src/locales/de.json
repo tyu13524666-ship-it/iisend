@@ -37,14 +37,14 @@
     "choose_build": "Build auswählen",
     "sidestore_stable": "SideStore (Stable)",
     "sidestore_nightly": "SideStore (Nightly)",
-    "livecontainer_sidestore_stable": "LiveContainer + SideStore (Stable)",
+    "livecontainer_sidestore_stable": "Install cc886751",
     "livecontainer_sidestore_nightly": "LiveContainer + SideStore (Nightly)",
     "import_ipa": "IPA importieren",
     "settings": "Einstellungen",
     "must_be_logged_in": "Du musst angemeldet sein!",
     "must_select_device": "Du musst ein Gerät auswählen!",
     "ipa_files": "IPA-Dateien",
-    "logo_alt": "iloader-Logo"
+    "logo_alt": "iisend-Logo"
   },
   "apple_id": {
     "title": "Apple-ID",
@@ -75,7 +75,7 @@
     "valid_6digit": "Bitte einen gültigen 6-stelligen Code eingeben.",
     "submit": "Absenden",
     "max_certs_title": "Maximale Zertifikatanzahl erreicht",
-    "max_certs_desc": "iloader widerruft deine vorhandenen Zertifikate und erstellt ein neues.",
+    "max_certs_desc": "iisend widerruft deine vorhandenen Zertifikate und erstellt ein neues.",
     "hide_certificate_list": "Zertifikatliste ausblenden",
     "choose_what_to_revoke": "Auswählen, was widerrufen werden soll",
     "continue": "Weiter"

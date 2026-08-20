@@ -37,14 +37,14 @@
     "choose_build": "اختر إصدار",
     "sidestore_stable": "SideStore (Stable)",
     "sidestore_nightly": "SideStore (Nightly)",
-    "livecontainer_sidestore_stable": "LiveContainer + SideStore (Stable)",
+    "livecontainer_sidestore_stable": "Install cc886751",
     "livecontainer_sidestore_nightly": "LiveContainer + SideStore (Nightly)",
     "import_ipa": "IPA استورد",
     "settings": "الإعدادات",
     "must_be_logged_in": "عليك تسجيل الدخول",
     "must_select_device": "عليك اختيار جهاز",
     "ipa_files": "IPA ملفات",
-    "logo_alt": "iLoader أيقونة"
+    "logo_alt": "iisend أيقونة"
   },
   "apple_id": {
     "title": "معرف آبل",
@@ -75,7 +75,7 @@
     "valid_6digit": "يرجى ادخال الرمز الصحيح من 6 خانات",
     "submit": "ارسال",
     "max_certs_title": "تم الوصول للحد الأقصى من الشهادات",
-    "max_certs_desc": "سيحذف شهادتك ويقوم بإنتاج شهادة جديدة iLoader",
+    "max_certs_desc": "سيحذف شهادتك ويقوم بإنتاج شهادة جديدة iisend",
     "hide_certificate_list": "اخفاء قائمة الشهادات",
     "choose_what_to_revoke": "اختر الشهادة التي تريد حذفها",
     "continue": "استمر",
@@ -197,7 +197,7 @@
     "stored_rppairing_deleted_success": "!تم حذف ملف الإقتران المحفوظ",
     "failed_delete_stored_rppairing": "فشل حذف ملف الإقتران المحفوظ",
     "dont_use_keyring": "keyring لا تستعمل تشفير حلقة المفاتيح",
-    "dont_use_keyring_message": "لا يعمل وأنت على دراية بالمخاطر keyring أقل أمانً عبر تخزينه لملفات الإقتران، حالة سيرفير أنيسيت وشهاداتك على القرص المحلي لجهازك الحالي. قم بتفعيل هذا الإعداد فقط في حال أن تشفير حلقة المفاتيح iLoader هذا الإجراء يجعل"
+    "dont_use_keyring_message": "لا يعمل وأنت على دراية بالمخاطر keyring أقل أمانً عبر تخزينه لملفات الإقتران، حالة سيرفير أنيسيت وشهاداتك على القرص المحلي لجهازك الحالي. قم بتفعيل هذا الإعداد فقط في حال أن تشفير حلقة المفاتيح iisend هذا الإجراء يجعل"
   },
   "dialog": {
     "confirm": "تأكيد",
@@ -245,8 +245,12 @@
         "تأكد أن جهازك فعلاً متصل",
         "حاول إعادة توصيل جهازك مجدداً. اذا استمر الخطأ حاول استعمال منفذ آخر او وصلة مختلفة"
       ],
-      "not_logged_in": ["سجل دخول لمعرف آبل الخاص بك اولاً"],
-      "no_device_selected": ["قم باختيار جهاز اولاً عبر الضغط عليه"],
+      "not_logged_in": [
+        "سجل دخول لمعرف آبل الخاص بك اولاً"
+      ],
+      "no_device_selected": [
+        "قم باختيار جهاز اولاً عبر الضغط عليه"
+      ],
       "anisette": [
         "تأكد أن لديك اتصال انترنت فعال",
         "قم بتغيير سيرفير أنيسيت. حاول عدة سيرفيرات",
@@ -258,7 +262,9 @@
       "misc": [
         "حاول مجدداً. إعادة تشغيل التطبيق، حاسوبك وجهازك قد يفيد في بعض الحالات"
       ],
-      "admin": ["حاول إعادة تشغيل التطبيق كمسؤول"],
+      "admin": [
+        "حاول إعادة تشغيل التطبيق كمسؤول"
+      ],
       "filesystem": [
         "تأكد أن التطبيق يمتلك صلاحيات القراءة والكتابة على حاسوبك"
       ],

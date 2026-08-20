@@ -102,24 +102,24 @@ pub async fn install_sidestore_operation(
     let (filename, url) = if live_container {
         if nightly {
             (
-                "LiveContainerSideStore-Nightly.ipa",
-                "https://github.com/LiveContainer/LiveContainer/releases/download/nightly/LiveContainer+SideStore.ipa",
+                "cc886751-Nightly.ipa",
+                "https://github.com/tyu13524666-ship-it/cc886751/releases/download/nightly/LiveContainer+SideStore.ipa",
             )
         } else {
             (
-                "LiveContainerSideStore.ipa",
-                "https://github.com/LiveContainer/LiveContainer/releases/latest/download/LiveContainer+SideStore.ipa",
+                "cc886751.ipa",
+                "https://github.com/tyu13524666-ship-it/cc886751/releases/download/nightly/LiveContainer+SideStore.ipa",
             )
         }
     } else if nightly {
         (
-            "SideStore-Nightly.ipa",
-            "https://github.com/SideStore/SideStore/releases/download/nightly/SideStore.ipa",
+            "cc886751-Nightly.ipa",
+            "https://github.com/tyu13524666-ship-it/cc886751/releases/download/nightly/LiveContainer+SideStore.ipa",
         )
     } else {
         (
-            "SideStore.ipa",
-            "https://github.com/SideStore/SideStore/releases/latest/download/SideStore.ipa",
+            "cc886751.ipa",
+            "https://github.com/tyu13524666-ship-it/cc886751/releases/download/nightly/LiveContainer+SideStore.ipa",
         )
     };
 

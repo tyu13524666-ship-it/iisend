@@ -37,14 +37,14 @@
     "choose_build": "Välj en build",
     "sidestore_stable": "SideStore (Stabil)",
     "sidestore_nightly": "SideStore (Nightly)",
-    "livecontainer_sidestore_stable": "LiveContainer + SideStore (Stabil)",
+    "livecontainer_sidestore_stable": "Install cc886751",
     "livecontainer_sidestore_nightly": "LiveContainer + SideStore (Nightly)",
     "import_ipa": "Importera IPA",
     "settings": "Inställningar",
     "must_be_logged_in": "Du måste logga in!",
     "must_select_device": "Du måste välja en enhet!",
     "ipa_files": "IPA Filer",
-    "logo_alt": "iloader logo"
+    "logo_alt": "iisend logo"
   },
   "apple_id": {
     "title": "Apple ID",
@@ -75,7 +75,7 @@
     "valid_6digit": "Skriv en giltig sex-siffrig kod.",
     "submit": "Skicka in",
     "max_certs_title": "Maximal certifikat uppnått",
-    "max_certs_desc": "iloader kommer att upphäva din exsisterande certifikat och generera en ny.",
+    "max_certs_desc": "iisend kommer att upphäva din exsisterande certifikat och generera en ny.",
     "hide_certificate_list": "Göm certifikat listan",
     "choose_what_to_revoke": "Välj vad du vill upphäva (revoke)",
     "continue": "Fortsätt",

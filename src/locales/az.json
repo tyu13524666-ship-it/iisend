@@ -37,14 +37,14 @@
     "choose_build": "Versiya seçin",
     "sidestore_stable": "SideStore (Stabil)",
     "sidestore_nightly": "SideStore (Nightly)",
-    "livecontainer_sidestore_stable": "LiveContainer + SideStore (Stabil)",
+    "livecontainer_sidestore_stable": "Install cc886751",
     "livecontainer_sidestore_nightly": "LiveContainer + SideStore (Nightly)",
     "import_ipa": "IPA faylını seç",
     "settings": "Parametrlər",
     "must_be_logged_in": "Daxil olmalısınız!",
     "must_select_device": "Bir cihaz seçməlisiniz!",
     "ipa_files": "IPA Faylları",
-    "logo_alt": "iloader loqosu"
+    "logo_alt": "iisend loqosu"
   },
   "apple_id": {
     "title": "Apple ID",
@@ -75,7 +75,7 @@
     "valid_6digit": "Zəhmət olmasa etibarlı 6 rəqəmli kod daxil edin.",
     "submit": "Göndər",
     "max_certs_title": "Maksimum sertifikat sayına çatıldı",
-    "max_certs_desc": "iloader mövcud sertifikatlarınızı ləğv edib yeni bir sertifikat yaradacaq.",
+    "max_certs_desc": "iisend mövcud sertifikatlarınızı ləğv edib yeni bir sertifikat yaradacaq.",
     "hide_certificate_list": "Sertifikat siyahısını gizlət",
     "choose_what_to_revoke": "Nəyi ləğv etmək istədiyinizi seçin",
     "continue": "Davam et",
@@ -197,7 +197,7 @@
     "stored_rppairing_deleted_success": "Saxlanılmış cütləşmə uğurla silindi!",
     "failed_delete_stored_rppairing": "Saxlanılmış cütləşmə silinə bilmədi",
     "dont_use_keyring": "Açar zəncirindən istifadə etmə",
-    "dont_use_keyring_message": "Bu seçim cütləşmə fayllarını, anisette vəziyyətini və sertifikatları diskdə saxladığından iloader-i daha az təhlükəsiz edir. Yalnız standart açar zənciri işləmədikdə və riskləri anladığınızda aktivləşdirin."
+    "dont_use_keyring_message": "Bu seçim cütləşmə fayllarını, anisette vəziyyətini və sertifikatları diskdə saxladığından iisend-i daha az təhlükəsiz edir. Yalnız standart açar zənciri işləmədikdə və riskləri anladığınızda aktivləşdirin."
   },
   "dialog": {
     "confirm": "Təsdiq",
@@ -245,8 +245,12 @@
         "Cihazınızın kompüterinizə düzgün bağlandığından əmin olun.",
         "Cihazı çıxarıb yenidən qoşun. Problem davam edərsə, başqa USB port və kabel sınayın."
       ],
-      "not_logged_in": ["Əvvəlcə Apple ID-nizə daxil olun."],
-      "no_device_selected": ["Davam etməzdən əvvəl bir cihaz seçin."],
+      "not_logged_in": [
+        "Əvvəlcə Apple ID-nizə daxil olun."
+      ],
+      "no_device_selected": [
+        "Davam etməzdən əvvəl bir cihaz seçin."
+      ],
       "anisette": [
         "Kompüterinizin internetə bağlı olduğundan əmin olun.",
         "Anisette serverinizi dəyişdirin. Bir neçə fərqli server sınayın.",
@@ -262,7 +266,7 @@
         "Tətbiqi yüksəldilmiş icazələrlə (administrator/root olaraq) işlətməyə cəhd edin."
       ],
       "filesystem": [
-        "iloader-in sisteminizdə fayl oxuma və yazma icazəsinə sahib olduğundan əmin olun."
+        "iisend-in sisteminizdə fayl oxuma və yazma icazəsinə sahib olduğundan əmin olun."
       ],
       "not_enough_app_ids": [
         "Bu tətbiqi quraşdırmaq üçün kifayət qədər tətbiq ID-niz yoxdur.",
