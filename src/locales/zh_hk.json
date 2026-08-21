@@ -44,7 +44,11 @@
     "must_be_logged_in": "你一定要登入！",
     "must_select_device": "你一定要揀返部裝置！",
     "ipa_files": "IPA 檔案",
-    "logo_alt": "iisend 標誌"
+    "logo_alt": "iisend 標誌",
+    "send_to_container": "傳送 IPA 到 iiTwins",
+    "sending_to_container": "傳送中…",
+    "sent_to_container": "已傳送 {{name}}，在 iiTwins 裡從檔案選取即可安裝。",
+    "failed_send_to_container": "傳送失敗"
   },
   "apple_id": {
     "title": "Apple ID",

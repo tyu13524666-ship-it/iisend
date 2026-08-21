@@ -169,7 +169,7 @@ async fn generate_rppairing(
 }
 
 pub async fn place_file(
-    pairing: Vec<u8>,
+    contents: Vec<u8>,
     provider: &dyn IdeviceProvider,
     bundle_id: String,
     path: String,
@@ -203,9 +203,9 @@ pub async fn place_file(
             AppError::HouseArrest("Failed to open file on device".into(), e.to_string())
         })?;
 
-    file.write_entire(&pairing)
+    file.write_entire(&contents)
         .await
-        .map_err(|e| AppError::HouseArrest("Failed to write pairing file".into(), e.to_string()))?;
+        .map_err(|e| AppError::HouseArrest("Failed to write file".into(), e.to_string()))?;
     file.close()
         .await
         .map_err(|e| AppError::HouseArrest("Failed to close file".into(), e.to_string()))?;
@@ -230,6 +230,85 @@ pub async fn place_pairing_cmd(
     let provider = get_provider(&device.info).await?;
 
     place_file(device.pairing, &provider, bundle_id, path).await
+}
+
+// 找出裝置上的容器 app。get_sidestore_info 會連 SideStore 一併比對，安裝清單的
+// 走訪順序又不固定，用它可能拿到另一個 app 的識別碼，因此這裡只認容器本身。
+async fn find_container_app(device: &DeviceInfo) -> Result<Option<PairingAppInfo>, AppError> {
+    let provider = get_provider(device).await?;
+    let mut installation_proxy = InstallationProxyClient::connect(&provider)
+        .await
+        .map_err(|e| {
+            AppError::DeviceComsWithMessage(
+                "Failed to connect to installation proxy".into(),
+                e.to_string(),
+            )
+        })?;
+
+    let installed_apps = installation_proxy
+        .get_apps(Some("User"), None)
+        .await
+        .map_err(|e| {
+            AppError::DeviceComsWithMessage("Failed to get installed apps".into(), e.to_string())
+        })?;
+
+    for (bundle_id, app) in installed_apps {
+        let name = app
+            .as_dictionary()
+            .and_then(|x| x.get("CFBundleDisplayName").and_then(|x| x.as_string()))
+            .unwrap_or_default();
+
+        if name == "iiTwins" || name == "LiveContainer" {
+            return Ok(Some(PairingAppInfo {
+                name: name.to_string(),
+                bundle_id: bundle_id.to_string(),
+                path: String::new(),
+            }));
+        }
+    }
+
+    Ok(None)
+}
+
+// 把電腦上的檔案送進容器 app 的 Documents，例如要在容器內安裝的 ipa。
+// 走的是與配對檔相同的管道，差別只在內容來自本機檔案；如此使用者不必再另外
+// 架設下載點或改用其他工具，就能把檔案交給裝置。
+#[tauri::command]
+pub async fn upload_file_cmd(
+    device_state: State<'_, DeviceInfoMutex>,
+    local_path: String,
+) -> Result<String, AppError> {
+    let device = {
+        let device_guard = device_state.lock().unwrap();
+        match &*device_guard {
+            Some(d) => d.clone(),
+            None => return Err(AppError::NoDeviceSelected),
+        }
+    };
+
+    let file_name = std::path::Path::new(&local_path)
+        .file_name()
+        .and_then(|name| name.to_str())
+        .ok_or_else(|| {
+            AppError::HouseArrest("Invalid file path".into(), local_path.clone())
+        })?
+        .to_string();
+
+    let contents = std::fs::read(&local_path).map_err(|e| {
+        AppError::HouseArrest("Failed to read the selected file".into(), e.to_string())
+    })?;
+
+    let target = find_container_app(&device.info).await?.ok_or_else(|| {
+        AppError::HouseArrest(
+            "iiTwins was not found on this device".into(),
+            "install it first".into(),
+        )
+    })?;
+
+    let provider = get_provider(&device.info).await?;
+    place_file(contents, &provider, target.bundle_id, file_name.clone()).await?;
+
+    Ok(file_name)
 }
 
 // prompt for a location to save the pairing file, then export it there. This is for advanced users who want to use the pairing file with other tools, or just want a backup of it. Normal users should use the "Place" button next to the app they want to pair with instead, which will transfer the pairing file automatically.

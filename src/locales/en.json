@@ -44,7 +44,11 @@
     "must_be_logged_in": "You must be logged in!",
     "must_select_device": "You must select a device!",
     "ipa_files": "IPA Files",
-    "logo_alt": "iisend logo"
+    "logo_alt": "iisend logo",
+    "send_to_container": "Send IPA to iiTwins",
+    "sending_to_container": "Sending to iiTwins...",
+    "sent_to_container": "Sent {{name}}. Open iiTwins and pick it from Files.",
+    "failed_send_to_container": "Failed to send the file"
   },
   "apple_id": {
     "title": "Apple ID",

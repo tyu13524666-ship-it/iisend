@@ -322,6 +322,32 @@ function App() {
                 >
                   {t("app.import_ipa")}
                 </button>
+                <button
+                  onClick={async () => {
+                    if (!ensureSelectedDevice()) return;
+                    let path = await openFileDialog({
+                      multiple: false,
+                      filters: [
+                        { name: t("app.ipa_files"), extensions: ["ipa"] },
+                      ],
+                    });
+                    if (!path) return;
+                    const promise = invoke<string>("upload_file_cmd", {
+                      localPath: path as string,
+                    });
+                    toast.promise(promise, {
+                      loading: t("app.sending_to_container"),
+                      success: (name) =>
+                        t("app.sent_to_container", { name }),
+                      error: (e) =>
+                        `${t("app.failed_send_to_container")}: ${
+                          e?.message ?? e
+                        }`,
+                    });
+                  }}
+                >
+                  {t("app.send_to_container")}
+                </button>
               </div>
             </GlassCard>
           </section>
