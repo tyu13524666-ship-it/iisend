@@ -5,14 +5,13 @@ use std::{
 
 // used https://github.com/jkcoxson/idevice_pair/ as a guide
 use idevice::{
-    IdeviceError, IdeviceService, RemoteXpcClient,
-    core_device_proxy::CoreDeviceProxy,
+    IdeviceError, IdeviceService,
+    afc::AfcClient,
     house_arrest::HouseArrestClient,
     installation_proxy::InstallationProxyClient,
     lockdown::LockdownClient,
     provider::IdeviceProvider,
-    remote_pairing::{RemotePairingClient, RpPairingFile},
-    rsd::RsdHandshake,
+    remote_pairing::{RemotePairingLockdownService, RpPairingFile},
     usbmuxd::UsbmuxdConnection,
 };
 use isideload::util::storage::{InMemoryStorage, SideloadingStorage};
@@ -37,7 +36,10 @@ struct PairingStorageEntry {
 static PAIRING_STORAGE: OnceLock<Mutex<PairingStorageEntry>> = OnceLock::new();
 
 const PAIRING_APPS: &[(&str, &str)] = &[
-    ("SideStore", "ALTPairingFile.mobiledevicepairing"),
+    (
+        "SideStore",
+        "ALTPairingFile.mobiledevicepairing;PairingFile_RemoteRP.plist;PairingFile_Lockdown.plist",
+    ),
     (
         "LiveContainer",
         "SideStore/Documents/ALTPairingFile.mobiledevicepairing",
@@ -48,7 +50,7 @@ const PAIRING_APPS: &[(&str, &str)] = &[
     ),
     ("Feather", "pairingFile.plist"),
     ("StikDebug", "pairingFile.plist"),
-    ("StikDebug (Sideloaded)", "rp_pairing_file.plist"),
+    ("StikDebug (Sideloaded)", "pairingFile.plist"),
     ("StikTest", "stiktest_pairing.plist"),
     ("Protokolle", "pairingFile.plist"),
     ("Antrag", "pairingFile.plist"),
@@ -56,6 +58,7 @@ const PAIRING_APPS: &[(&str, &str)] = &[
     ("StikStore", "pairingFile.plist"),
     ("ByeTunes", "pairing file/pairingFile.plist"),
     ("Reynard", "pairingFile.plist"),
+    ("PanicAnalyzer", "pairingFile.plist"),
 ];
 
 #[derive(Serialize)]
@@ -110,58 +113,53 @@ async fn generate_lockdown_plist(
 }
 
 async fn generate_rppairing_plist(
+    app: &AppHandle,
+    udid: &str,
     provider: &dyn IdeviceProvider,
 ) -> Result<(plist::Value, Vec<u8>), IdeviceError> {
-    let bytes = generate_rppairing(provider, "iisend").await?.to_bytes();
+    let hostname = host_label(app, udid).map_err(|e| IdeviceError::InternalError(e.to_string()))?;
+    let bytes = generate_rppairing(provider, &hostname).await?.to_bytes();
     let plist = plist::Value::from_reader_xml(std::io::Cursor::new(&bytes))
         .map_err(|e| IdeviceError::InternalError(format!("Invalid RPPairing plist: {}", e)))?;
     Ok((plist, bytes))
+}
+
+fn new_host_label() -> String {
+    let id = uuid::Uuid::new_v4().simple().to_string();
+    format!("iloader-{}", &id[..6])
+}
+
+fn host_label(app: &AppHandle, udid: &str) -> Result<String, AppError> {
+    with_pairing_storage(app, |storage| {
+        let key = format!("host_label_{udid}");
+        if let Some(value) = storage.retrieve_data(&key).map_err(|e| {
+            AppError::Storage(
+                "Failed to get pairing hostname from storage".into(),
+                e.to_string(),
+            )
+        })? {
+            return String::from_utf8(value).map_err(|e| {
+                AppError::Storage("Stored pairing hostname is invalid".into(), e.to_string())
+            });
+        }
+
+        let hostname = new_host_label();
+        storage.store_data(&key, hostname.as_bytes()).map_err(|e| {
+            AppError::Storage("Failed to store pairing hostname".into(), e.to_string())
+        })?;
+        Ok(hostname)
+    })
 }
 
 async fn generate_rppairing(
     provider: &dyn IdeviceProvider,
     hostname: &str,
 ) -> Result<RpPairingFile, IdeviceError> {
-    info!("Connecting to CoreDeviceProxy...");
-    let proxy = CoreDeviceProxy::connect(provider).await?;
-    let rsd_port = proxy.tunnel_info().server_rsd_port;
-    info!("CDTunnel established, RSD port {rsd_port}");
+    let service = RemotePairingLockdownService::connect(&*provider).await?;
+    let mut client = service.into_client(&hostname).expect("no socket");
 
-    info!("Starting TCP stack...");
-    let adapter = proxy.create_software_tunnel()?;
-    let mut adapter = adapter.to_async_handle();
-
-    info!("Performing RSD handshake...");
-    let rsd_stream = adapter.connect(rsd_port).await?;
-    let handshake = RsdHandshake::new(rsd_stream).await?;
-    info!("RSD: {} services", handshake.services.len());
-    let tunnel_service = handshake
-        .services
-        .get("com.apple.internal.dt.coredevice.untrusted.tunnelservice")
-        .ok_or_else(|| IdeviceError::InternalError("Untrusted tunnel service not found".into()))?;
-
-    info!("Connecting to untrusted tunnel service...");
-    let tunnel_service_stream = adapter.connect(tunnel_service.port).await?;
-    let mut remote_xpc = RemoteXpcClient::new(tunnel_service_stream).await?;
-    remote_xpc.do_handshake().await?;
-    let _ = remote_xpc.recv_root().await;
-
-    info!("Starting RPPairing...");
-    info!("(You may need to tap Trust on the device)");
-    let mut pairing_file = RpPairingFile::generate(hostname);
-    let mut pairing_client = RemotePairingClient::new(remote_xpc, hostname);
-    pairing_client
-        .connect(&mut pairing_file, async || "000000".to_string())
-        .await?;
-
-    // use it right away to try and convince the device to commmit it to the keychain
-    info!("Connecting to untrusted tunnel service again...");
-    let tunnel_service_stream = adapter.connect(tunnel_service.port).await?;
-    let mut remote_xpc = RemoteXpcClient::new(tunnel_service_stream).await?;
-    remote_xpc.do_handshake().await?;
-    let _ = remote_xpc.recv_root().await;
-    let mut pairing_client = RemotePairingClient::new(remote_xpc, hostname);
-    pairing_client
+    let mut pairing_file = RpPairingFile::generate(&hostname);
+    client
         .connect(&mut pairing_file, async || "000000".to_string())
         .await?;
 
@@ -183,6 +181,19 @@ pub async fn place_file(
         .await
         .map_err(|e| AppError::HouseArrest("Failed to vend documents".into(), e.to_string()))?;
 
+    let files = path.split(';').map(|s| s.trim()).filter(|s| !s.is_empty());
+    for file in files {
+        place_individual_file(&mut afc_client, pairing.clone(), file.to_string()).await?;
+    }
+
+    Ok(())
+}
+
+async fn place_individual_file(
+    afc_client: &mut AfcClient,
+    pairing: Vec<u8>,
+    path: String,
+) -> Result<(), AppError> {
     afc_client
         .mk_dir(format!(
             "/Documents/{}",
@@ -412,7 +423,7 @@ pub async fn pairing_file(
         return Ok(plist_to_xml_bytes(&lockdown_dict));
     }
 
-    let cache_key = format!("rppairing_file_{}", device.udid);
+    let cache_key = format!("rppairing1.1_file_{}", device.udid);
 
     let cached_rppairing = with_pairing_storage(app, |storage| {
         storage.retrieve_data(&cache_key).map_err(|e| {
@@ -433,7 +444,7 @@ pub async fn pairing_file(
                     _ = cancel.cancelled() => {
                         return Err(AppError::Canceled("Pairing".into()));
                     }
-                    res = generate_rppairing_plist(&provider) => {
+                    res = generate_rppairing_plist(app, &device.udid, &provider) => {
                         res.map_err(|e| AppError::RemotePairing(e.to_string()))?
                     }
                 };
@@ -456,7 +467,7 @@ pub async fn pairing_file(
             _ = cancel.cancelled() => {
                 return Err(AppError::Canceled("Pairing".into()));
             }
-            res = generate_rppairing_plist(&provider) => {
+            res = generate_rppairing_plist(app, &device.udid, &provider) => {
                 res.map_err(|e| AppError::RemotePairing(e.to_string()))?
             }
         };
@@ -495,12 +506,19 @@ pub async fn delete_stored_rppairing(
         }
     };
 
-    let cache_key = format!("rppairing_file_{}", device.info.udid);
+    let cache_key = format!("rppairing1.1_file_{}", device.info.udid);
+    let host_label_key = format!("host_label_{}", device.info.udid);
 
     with_pairing_storage(&app, |storage| {
         storage.delete(&cache_key).map_err(|e| {
             AppError::Storage("Failed to delete stored RPPairing".into(), e.to_string())
-        })
+        })?;
+        let hostname = new_host_label();
+        storage
+            .store_data(&host_label_key, hostname.as_bytes())
+            .map_err(|e| {
+                AppError::Storage("Failed to rotate pairing hostname".into(), e.to_string())
+            })
     })?;
 
     Ok(())
@@ -512,7 +530,7 @@ pub async fn has_stored_rppairing(device: DeviceInfo, app: AppHandle) -> Result<
     if is_ios_version_below(&device.version, 17, 4) {
         return Ok(true);
     }
-    let cache_key = format!("rppairing_file_{}", device.udid);
+    let cache_key = format!("rppairing1.1_file_{}", device.udid);
 
     with_pairing_storage(&app, |storage| {
         storage.retrieve_data(&cache_key).map_err(|e| {
