@@ -183,7 +183,7 @@ pub async fn place_file(
 
     let files = path.split(';').map(|s| s.trim()).filter(|s| !s.is_empty());
     for file in files {
-        place_individual_file(&mut afc_client, pairing.clone(), file.to_string()).await?;
+        place_individual_file(&mut afc_client, contents.clone(), file.to_string()).await?;
     }
 
     Ok(())
@@ -214,7 +214,7 @@ async fn place_individual_file(
             AppError::HouseArrest("Failed to open file on device".into(), e.to_string())
         })?;
 
-    file.write_entire(&contents)
+    file.write_entire(&pairing)
         .await
         .map_err(|e| AppError::HouseArrest("Failed to write file".into(), e.to_string()))?;
     file.close()
